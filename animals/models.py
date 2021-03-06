@@ -28,18 +28,18 @@ class AnimalCard(models.Model):
         return self.text
 
 
-class Food(models.Model):
-    name = models.CharField(max_length=64)
-
-    def __str__(self):
-        return self.name
+# class Food(models.Model):
+#     name = models.CharField(max_length=64)
+#
+#     def __str__(self):
+#         return self.name
 
 
 class Animal(models.Model):
     name = models.CharField(max_length=64)
     age = models.PositiveIntegerField()
     card = models.OneToOneField(AnimalCard, on_delete=models.CASCADE, blank=True)
-    food = models.ManyToManyField(Food)
+    # food = models.ManyToManyField(Food)
     kind = models.ForeignKey(Kind, on_delete=models.PROTECT)
     img = models.ImageField(upload_to='animals', blank=True, null=True)
 

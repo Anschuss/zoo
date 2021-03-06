@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     ## my
     'animals',
     'about',
+    'news',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# CELERY SETTINGS
+CELERY_BROKER_URL = 'redis://0.0.0.0:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = "UTC"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BACKEND_RESULT = 'redis://0.0.0.0:6379'
+
+# USER
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'

@@ -1,14 +1,15 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ContactForm
-from .models import MessageInformation
+from celery import current_app
+from .task import save_user_message
 
 
 class AboutTemplateView(TemplateView):
     template_name = 'about/about.html'
 
 
-class ContactFormView(FormView):
+class ContactFormView(LoginRequiredMixin, FormView):
     template_name = 'about/contact.html'
     form_class = ContactForm
     success_url = '/'
@@ -18,7 +19,6 @@ class ContactFormView(FormView):
         subject = form.cleaned_data['subject']
         text = form.cleaned_data['text']
 
-        message = MessageInformation(email=email, subject=subject, text=text)
-        message.save()
+        save_user_message.delay(email, subject, text)
 
         return super().form_valid(form)
