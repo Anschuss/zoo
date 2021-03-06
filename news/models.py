@@ -24,7 +24,6 @@ class News(models.Model):
     text = models.TextField()
     img = models.ImageField(upload_to='news', blank=True, null=True)
     tags = models.ManyToManyField(Tag)
-    date = models.DateTimeField()
 
     def __str__(self):
         return f'{self.title}, {self.subject}, {self.them}'
