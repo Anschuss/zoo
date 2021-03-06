@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, \
     CreateView, UpdateView, DeleteView
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import News
-from .forms import CreateNews
+from .forms import *
 
 
 class NewsListView(ListView):
@@ -43,3 +46,21 @@ class DeleteNewsView(DeleteView):
     model = News
     template_name = 'news/delete_confirm.html'
     success_url = '/'
+
+
+## USER
+
+class CreateUserView(CreateView):
+    model = User
+    form_class = RegistrationUserForm
+    success_url = '/'
+    template_name = 'news/registration.html'
+
+
+class LoginUserView(LoginView):
+    form_class = LoginUserForm
+    success_url = '/'
+    template_name = 'news/login.html'
+
+class LogoutUser(LogoutView):
+    pass
