@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8" style="margin-right: auto;margin-left: auto">
+                <div class="col-12" style="margin-bottom: 40px">
+                    <h3 class="display-4">
+                        {{ news.title }}
+                    </h3>
+                    <h4 class="display-6">
+                        {{ news.subject }}
+                    </h4>
+                </div>
+                <hr>
+                <img src="{{ news.img.url }}" class="figure-img img-fluid rounded" alt="...">
+                <div class="col-12" style="font-size: larger; margin-top: 30px">
+                    <p>
+                        {{ news.text }}
+                    </p>
+                </div>
+                <hr>
+                <div class="disable" style="color: gainsboro; display: flex">
+                    <p>{{ news.them }}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

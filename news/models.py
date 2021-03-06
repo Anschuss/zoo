@@ -22,9 +22,10 @@ class News(models.Model):
     subject = models.CharField(max_length=120)
     intro = models.CharField(max_length=300)
     text = models.TextField()
+    img = models.ImageField(upload_to='news', blank=True, null=True)
     tags = models.ManyToManyField(Tag)
     date = models.DateTimeField()
 
     def __str__(self):
-        return self.title, self.subject, self.them
+        return f'{self.title}, {self.subject}, {self.them}'
 

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    News
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for news in object_list %}
+                <a href="{% url 'news:detail' pk=news.pk %}" class="nav-link active" style="text-decoration: none; color: #545454">
+                    <div class="col-md-8">
+                        <h3 class="display-6">
+                            {{ news.title }}
+                        </h3>
+                        <h4 class="display-7">
+                            {{ news.subject }}
+                        </h4>
+                        <hr>
+                        <img src="{{ news.img.url }}" class="figure-img img-fluid rounded" alt="...">
+                        <hr>
+                        <p>
+                            {{ news.intro }}
+                        </p>
+                        <hr>
+                        <p class="disable" style="color: gainsboro">
+                            {{ news.them }}
+                        </p>
+
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

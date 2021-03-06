@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Animal
 from django.views.generic import ListView, DetailView, \
     UpdateView, CreateView, FormView
+from .models import Animal
 
 
 class AnimalListView(ListView):
