@@ -1,7 +1,7 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
 from .forms import ContactForm
-from .models import MessageInformation
+from celery import current_app
+from .task import save_user_message
 
 
 class AboutTemplateView(TemplateView):
@@ -18,7 +18,6 @@ class ContactFormView(FormView):
         subject = form.cleaned_data['subject']
         text = form.cleaned_data['text']
 
-        message = MessageInformation(email=email, subject=subject, text=text)
-        message.save()
+        save_user_message.delay(email, subject, text)
 
         return super().form_valid(form)
