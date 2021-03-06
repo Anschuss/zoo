@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView, FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ContactForm
 from celery import current_app
 from .task import save_user_message
@@ -8,7 +9,7 @@ class AboutTemplateView(TemplateView):
     template_name = 'about/about.html'
 
 
-class ContactFormView(FormView):
+class ContactFormView(LoginRequiredMixin, FormView):
     template_name = 'about/contact.html'
     form_class = ContactForm
     success_url = '/'

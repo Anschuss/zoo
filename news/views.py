@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, \
     CreateView, UpdateView, DeleteView
-from django.contrib.auth.models import User, Group
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import News
 from .forms import *
+from django.contrib.auth.mixins import UserPassesTestMixin
+
+
+class StaffOnlyMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_staff
 
 
 class NewsListView(ListView):
@@ -18,7 +21,7 @@ class NewDetailView(DetailView):
     template_name = 'news/news_detail.html'
 
 
-class NewsCreatView(CreateView):
+class NewsCreatView(StaffOnlyMixin, CreateView):
     model = News
     form_class = CreateNews
     template_name = 'news/create_news.html'
@@ -30,7 +33,7 @@ class NewsCreatView(CreateView):
         return super().form_valid(form)
 
 
-class UpdateNewsView(UpdateView):
+class UpdateNewsView(StaffOnlyMixin, UpdateView):
     model = News
     form_class = CreateNews
     template_name = 'news/update_news.html'
@@ -42,13 +45,16 @@ class UpdateNewsView(UpdateView):
         return super().form_valid(form)
 
 
-class DeleteNewsView(DeleteView):
+class DeleteNewsView(StaffOnlyMixin, DeleteView):
     model = News
     template_name = 'news/delete_confirm.html'
     success_url = '/'
 
 
 ## USER
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView, LogoutView
+
 
 class CreateUserView(CreateView):
     model = User
@@ -61,6 +67,7 @@ class LoginUserView(LoginView):
     form_class = LoginUserForm
     success_url = '/'
     template_name = 'news/login.html'
+
 
 class LogoutUser(LogoutView):
     pass

@@ -27,15 +27,17 @@
                 <div class="disable" style="color: gainsboro; display: flex">
                     <p>{{ news.them }}</p>
                 </div>
-                <div class="col-12" style="display: flex">
-                    <div class="col-md-3 col-sm-12" style="margin-top: 60px; margin-bottom: 50px">
-                        <a href="{% url 'news:update' pk=news.pk %}" class="btn btn-info">Изменить</a>
-                    </div>
-                    <div class="col-md-3 col-sm-12" style="margin-top: 60px; margin-bottom: 50px">
-                        <a href="{% url 'news:delete' pk=news.pk %}" class="btn btn-danger">Удалить</a>
-                    </div>
+                {% if user.is_staff %}
+                    <div class="col-12" style="display: flex">
+                        <div class="col-md-3 col-sm-12" style="margin-top: 60px; margin-bottom: 50px">
+                            <a href="{% url 'news:update' pk=news.pk %}" class="btn btn-info">Изменить</a>
+                        </div>
+                        <div class="col-md-3 col-sm-12" style="margin-top: 60px; margin-bottom: 50px">
+                            <a href="{% url 'news:delete' pk=news.pk %}" class="btn btn-danger">Удалить</a>
+                        </div>
 
-                </div>
+                    </div>
+                {% endif %}
             </div>
 
 
